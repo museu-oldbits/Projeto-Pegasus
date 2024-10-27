@@ -8,7 +8,7 @@
 - **Automação de Sinais Luminosos**: Configuração de LEDs para faróis, lanternas e setas.
 - **Modos de Motor**: Suporte para motores DC e brushless, com implementações de frenagem e reversão.
 - **Bluetooth BLE**: Controle opcional via BLE com dispositivos Android (futuramente, fase 2)
-- 
+
 ## Requisitos de Hardware
 - Arduino Pro Mini (ou AtMega328 compatível)
 - Módulo RF nRF24L01+
