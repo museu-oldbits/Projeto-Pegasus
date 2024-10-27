@@ -16,7 +16,7 @@
 - Potenciômetros (para controle de direção e aceleração)
 - Servos e motores
 - Módulo Bluetooth HM-10 (futuramente, fase 2)
-- 
+
 ## Primeiros Passos
 
 1. **Clonar o Repositório**
