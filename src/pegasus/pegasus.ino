@@ -13,15 +13,19 @@
 #define TURN_SIGNAL_RIGHT 4
 #define WATCHDOG_PIN 2
 #define BRAKE_PIN 8
+#define PIN_LUZ_RE 8  // Pino das luzes de ré
 
 // Configurações do nRF24L01
-RF24 radio(9, 10); // CE, CSN
+RF24 radio(9, 10); // CE, CSN Configuração dos pinos do nRF24L01
 uint8_t address[6] = "00001"; // Endereço como array de bytes
 bool connected = false;
 int throttle = 0;
 int steering = 0;
 int brake = 0;
 Servo steeringServo;
+
+const uint64_t enderecoPadrao = 0xF0F0F0F0E1LL; // Endereço padrão do rádio
+const int enderecoEEPROM = 0; // Endereço na EEPROM para salvar o endereço do nRF24L01
 
 // Funções de controle do motor e servo
 void applySteering(int direction) {
@@ -32,14 +36,17 @@ void applyThrottle(int speed) {
   if (speed > 0) {
     digitalWrite(MOTOR_PIN_FWD, HIGH);
     digitalWrite(MOTOR_PIN_REV, LOW);
+    digitalWrite(PIN_LUZ_RE, LOW);
   } else if (speed < 0) {
     digitalWrite(MOTOR_PIN_FWD, LOW);
     digitalWrite(MOTOR_PIN_REV, HIGH);
+    digitalWrite(PIN_LUZ_RE, HIGH);
   } else {
     // Freio motor
     digitalWrite(MOTOR_PIN_FWD, LOW);
     digitalWrite(MOTOR_PIN_REV, LOW);
     digitalWrite(BRAKE_PIN, HIGH); // Aplica o freio
+    digitalWrite(PIN_LUZ_RE, LOW);
   }
 }
 
@@ -84,6 +91,7 @@ void setup() {
   pinMode(MOTOR_PIN_FWD, OUTPUT);
   pinMode(MOTOR_PIN_REV, OUTPUT);
   pinMode(BRAKE_PIN, OUTPUT);
+  pinMode(PIN_LUZ_RE, OUTPUT);
   pinMode(WATCHDOG_PIN, INPUT);
 
   // Inicia o servo de direção
